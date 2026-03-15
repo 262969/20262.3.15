@@ -1,235 +1,203 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>轻移 · 至手机端</title>
-    <!-- 引入 Font Awesome 6 免费图标库 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>资源访问指引</title>
+    <!-- 引入 Font Awesome 图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- 保持你原有的所有 CSS 不变 --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-color: #ffffff;
+            --accent-color: #00f2fe;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: #0f0c29;
+            background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
             min-height: 100vh;
-            font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(145deg, #eae5ff 0%, #d4d2f0 45%, #f0e7fa 100%);
-            background-attachment: fixed;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
             position: relative;
-            overflow-x: hidden;
-            color: #2a2745;
+            color: var(--text-color);
         }
-        body::before {
-            content: ''; position: absolute; width: 40vmax; height: 40vmax; border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, rgba(255, 245, 240, 0.5), rgba(210, 190, 255, 0.3));
-            top: -10vmax; left: -10vmax; z-index: 0; filter: blur(80px);
-            animation: float-bg 18s infinite alternate ease-in-out;
+
+        /* 动态背景光斑 */
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            animation: floatOrb 10s infinite ease-in-out;
+            opacity: 0.6;
         }
-        body::after {
-            content: ''; position: absolute; width: 50vmin; height: 50vmin; border-radius: 50%;
-            background: radial-gradient(circle, rgba(200, 190, 255, 0.3), rgba(240, 230, 255, 0.2));
-            bottom: 0; right: 0; z-index: 0; filter: blur(70px);
-            animation: float-bg 22s infinite alternate-reverse ease-in-out;
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: #764ba2;
+            top: -50px;
+            left: -50px;
+            animation-delay: 0s;
         }
-        @keyframes float-bg {
-            0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-            100% { transform: translate(8%, 8%) scale(1.3); opacity: 0.9; }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: #667eea;
+            bottom: -100px;
+            right: -100px;
+            animation-delay: -5s;
         }
-        .glass-card {
-            position: relative; z-index: 20; width: 90%; max-width: 580px;
-            background: rgba(255, 255, 255, 0.58);
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
-            border-radius: 48px 24px 64px 24px;
-            box-shadow: 0 30px 60px -20px rgba(60, 45, 120, 0.4), 0 10px 30px -10px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            padding: 3.2rem 2rem 3.5rem 2rem;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: all 0.4s ease;
-            animation: card-appear 0.8s cubic-bezier(0.15, 0.85, 0.35, 1.05) forwards;
+
+        .orb-3 {
+            width: 200px;
+            height: 200px;
+            background: #00f2fe;
+            top: 40%;
+            left: 60%;
+            animation-delay: -2s;
+            opacity: 0.4;
         }
-        @keyframes card-appear {
-            0% { opacity: 0; transform: scale(0.92) translateY(20px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
+
+        @keyframes floatOrb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, 50px) scale(1.1); }
         }
-        .icon-wrapper {
-            position: relative; width: 140px; height: 140px;
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 1.8rem; filter: drop-shadow(0 8px 18px rgba(130, 100, 200, 0.25));
+
+        /* 粒子背景 (CSS 模拟) */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 1px, transparent 1px),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+            animation: moveParticles 20s linear infinite;
         }
-        .mobile-icon {
-            font-size: 5.8rem; color: #4b3b7c;
-            background: linear-gradient(145deg, #5f4b9c, #392f68);
-            background-clip: text; -webkit-background-clip: text;
+
+        @keyframes moveParticles {
+            from { background-position: 0 0; }
+            to { background-position: 50px 50px; }
+        }
+
+        /* 主卡片容器 */
+        .card-container {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 480px;
+            padding: 40px 30px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.05);
+            text-align: center;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* 图标区域 */
+        .icon-box {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .icon-box i {
+            font-size: 3.5rem;
+            background: linear-gradient(to bottom, #fff, #a5b4fc);
+            -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 10px rgba(160, 140, 240, 0.6);
-            position: relative; z-index: 10;
-            animation: float-icon 3.5s infinite alternate ease-in-out;
+            filter: drop-shadow(0 0 10px rgba(165, 180, 252, 0.5));
+            animation: pulseIcon 2s infinite ease-in-out;
         }
-        @keyframes float-icon {
-            0% { transform: translateY(0) scale(1); }
-            100% { transform: translateY(-12px) scale(1.02); }
+
+        @keyframes pulseIcon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
+
+        /* 波纹装饰 */
         .ripple {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            width: 100%; height: 100%; border-radius: 50%;
-            border: 2px solid rgba(140, 120, 220, 0.35);
-            box-shadow: 0 0 12px rgba(180, 150, 255, 0.4);
-            pointer-events: none; z-index: 0;
-            animation: ripple-wave 4s infinite ease-out;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: rippleEffect 2s infinite linear;
         }
-        .ripple:nth-child(2) { animation-delay: 1.2s; border-color: rgba(170, 140, 250, 0.3); }
-        .ripple:nth-child(3) { animation-delay: 2.4s; border-color: rgba(200, 170, 255, 0.25); border-width: 1.8px; }
-        @keyframes ripple-wave {
-            0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0.9; width: 40%; height: 40%; }
-            60% { opacity: 0.3; width: 130%; height: 130%; }
-            100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; width: 180%; height: 180%; }
+        .ripple:nth-child(2) { animation-delay: 0.5s; }
+        .ripple:nth-child(3) { animation-delay: 1s; }
+
+        @keyframes rippleEffect {
+            0% { width: 100%; height: 100%; opacity: 0.8; border-width: 2px; }
+            100% { width: 200%; height: 200%; opacity: 0; border-width: 0px; }
         }
-        .message {
-            font-size: clamp(2.4rem, 8vw, 4rem); font-weight: 600; line-height: 1.2;
-            text-align: center; letter-spacing: 0.02em; color: #2b234a;
-            text-shadow: 0 4px 12px rgba(255, 255, 255, 0.6);
-            background: linear-gradient(135deg, #2b1f44, #4a3a78);
-            background-clip: text; -webkit-background-clip: text;
+
+        /* 文字内容 */
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.4;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            background: linear-gradient(to right, #fff, #e0e7ff);
+            -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin: 0.5rem 0 0.2rem; padding: 0 0.5rem; white-space: balance;
         }
-        .message::after {
-            content: ''; display: block; width: 90px; height: 4px;
-            background: linear-gradient(90deg, #b7a6ff, #8875d4, #b7a6ff);
-            border-radius: 4px; margin: 1.2rem auto 0; opacity: 0.7;
+
+        p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-weight: 300;
         }
-        .corner-dots {
-            position: absolute; bottom: 18px; right: 24px;
-            display: flex; gap: 8px; z-index: 25; opacity: 0.5; pointer-events: none;
-        }
-        .corner-dots span {
-            width: 8px; height: 8px; background-color: #7d6ba3;
-            border-radius: 50%; display: inline-block; box-shadow: 0 0 8px #b6a2f0;
-        }
-        .corner-dots span:nth-child(2) { width: 12px; height: 12px; background-color: #a28fd6; opacity: 0.7; }
-        .line-ornament {
-            position: absolute; top: 24px; left: 20px; width: 40px; height: 40px;
-            border-left: 2px solid rgba(255, 255, 255, 0.35);
-            border-top: 2px solid rgba(255, 255, 255, 0.35);
-            border-radius: 18px 0 0 0; z-index: 25; opacity: 0.5; pointer-events: none;
-        }
-        @media (max-width: 480px) {
-            .glass-card { padding: 2.5rem 1.2rem 2.8rem 1.2rem; border-radius: 36px 20px 48px 20px; }
-            .icon-wrapper { width: 120px; height: 120px; margin-bottom: 1.2rem; }
-            .mobile-icon { font-size: 5rem; }
-            .message { font-size: 2.4rem; }
-            .message::after { width: 70px; height: 3px; margin-top: 1rem; }
-        }
-        @media (max-width: 360px) { .message { font-size: 2rem; } }
-        @media (orientation: landscape) and (max-height: 500px) {
-            .glass-card { padding: 1.8rem 1.5rem; }
-            .icon-wrapper { width: 90px; height: 90px; margin-bottom: 0.5rem; }
-            .mobile-icon { font-size: 4rem; }
-        }
-        
-        /* 新增：错误提示样式 */
-        .error-msg {
-            font-size: 1.2rem; color: #d9534f; margin-top: 1rem; text-align: center;
-            background: rgba(255,255,255,0.8); padding: 10px; border-radius: 10px;
-        }
-        .loading { font-size: 1.2rem; color: #666; margin-top: 1rem; }
-    </style>
-</head>
-<body>
-    <div class="line-ornament"></div>
-    <div class="corner-dots">
-        <span></span><span></span><span></span>
-    </div>
 
-    <!-- 核心卡片 -->
-    <div class="glass-card">
-        <div class="icon-wrapper">
-            <i class="fas fa-mobile-alt mobile-icon"></i>
-            <span class="ripple"></span>
-            <span class="ripple"></span>
-            <span class="ripple"></span>
-        </div>
-        
-        <!-- 动态内容区域 -->
-        <h1 class="message" id="main-text">请您移动到<br>手机端打开</h1>
-        <div id="status-area"></div>
-    </div>
-
-    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; background: radial-gradient(circle at 80% 20%, rgba(255, 240, 255, 0.15) 0%, transparent 50%);"></div>
-
-    <!-- ✅ 新增：核心 JavaScript 逻辑 -->
-    <script>
-        (async function() {
-            const statusArea = document.getElementById('status-area');
-            const mainText = document.getElementById('main-text');
-            
-            // 1. 获取 URL 中的 id 参数
-            const urlParams = new URLSearchParams(window.location.search);
-            const resourceId = urlParams.get('id');
-
-            // 如果没有 id 参数，直接显示默认提示（不执行任何操作）
-            if (!resourceId) {
-                return; 
-            }
-
-            // 显示加载状态（可选，提升体验）
-            statusArea.innerHTML = '<div class="loading">正在验证资源...</div>';
-
-            try {
-                // 2. 请求 links.json 文件
-                // 注意：这里使用相对路径，确保 links.json 和 index.html 在同一目录
-                const response = await fetch('links.json');
-                
-                if (!response.ok) {
-                    throw new Error('无法加载配置文件');
-                }
-
-                const data = await response.json();
-
-                // 3. 查找对应的链接
-                const targetUrl = data[resourceId];
-
-                if (targetUrl) {
-                    // ✅ 找到了！执行跳转逻辑
-                    
-                    // 判断是否为移动端 (简单的 UA 检测)
-                    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-                    if (isMobile) {
-                        // 手机端：直接跳转
-                        window.location.href = targetUrl;
-                    } else {
-                        // 电脑端：修改提示文字，并显示链接供复制
-                        mainText.innerHTML = '检测到电脑访问<br>请复制链接到手机';
-                        statusArea.innerHTML = `
-                            <div style="margin-top:15px; text-align:center;">
-                                <input type="text" value="${targetUrl}" readonly 
-                                    style="padding:10px; width:80%; border:1px solid #ddd; border-radius:5px; text-align:center; font-size:14px; color:#555;" 
-                                    onclick="this.select()">
-                                <br>
-                                <button onclick="navigator.clipboard.writeText('${targetUrl}');alert('已复制！');"
-                                    style="margin-top:10px; padding:8px 20px; background:#6c5ce7; color:white; border:none; border-radius:20px; cursor:pointer; font-size:14px;">
-                                    复制链接
-                                </button>
-                            </div>
-                        `;
-                    }
-                } else {
-                    // ❌ 没找到 ID
-                    mainText.innerHTML = '❌ 资源不存在';
-                    statusArea.innerHTML = '<div class="error-msg">请检查链接ID是否正确</div>';
-                }
-
-            } catch (error) {
-                console.error('Error:', error);
-                mainText.innerHTML = '⚠️ 系统错误';
-                statusArea.innerHTML = '<div class="error-msg">无法加载数据，请稍后重试</div>';
-            }
-        })();
-    </script>
-</body>
-</html>
+        /* 按钮样式 */
+        .action-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--primary-gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 20px rgba(118, 75, 162,
